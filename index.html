@@ -1,115 +1,68 @@
 <!DOCTYPE html>
-
 <html lang="ru">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Euro Sub Shop</title>
-
+    <title>AnimeWorldScroll Shop</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
     <style>
-
         body {
-
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-
             background-color: var(--tg-theme-bg-color, #ffffff);
-
             color: var(--tg-theme-text-color, #000000);
-
             margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center;
-
         }
-
         .container { width: 100%; max-width: 400px; }
-
         .card {
-
             background-color: var(--tg-theme-secondary-bg-color, #f0f0f0);
-
             border-radius: 12px; padding: 20px; margin-bottom: 20px; text-align: center;
-
             border: 1px solid rgba(0,0,0,0.1);
-
         }
-
         .price { font-size: 24px; font-weight: bold; color: #31b545; margin: 10px 0; }
-
         button {
-
             background-color: var(--tg-theme-button-color, #248bed);
-
             color: var(--tg-theme-button-text-color, #ffffff);
-
             border: none; border-radius: 8px; padding: 12px 20px;
-
-            width: 100%; font-size: 16px; font-weight: 500; cursor: pointer;
-
+            width: 100%; font-size: 16px; font-weight: 600; cursor: pointer;
+            transition: opacity 0.2s ease;
         }
-
+        button:active { opacity: 0.8; }
     </style>
-
 </head>
-
 <body>
-
     <div class="container">
-
-        <h2>Оформить подписку</h2>
+        <h2 style="text-align: center;">Оформить подписку</h2>
 
         <div class="card">
-
             <h3>Месячный доступ</h3>
-
             <div class="price">€ 10.00</div>
-
-            <p>Доступ к закрытому сообществу и эксклюзивному контенту.</p>
-
-            <button id="buy-btn">Выбрать тариф</button>
-
+            <p>Доступ к закрытому сообществу на 30 дней.</p>
+            <button onclick="sendTarif('sub_30_days')">Выбрать за 10.00€</button>
         </div>
 
+        <div class="card">
+            <h3>Квартальный доступ</h3>
+            <div class="price">€ 25.00</div>
+            <p>Выгодный план на 90 дней доступа.</p>
+            <button onclick="sendTarif('sub_90_days')">Выбрать за 25.00€</button>
+        </div>
     </div>
 
-
-
     <script>
-
         let tg = window.Telegram.WebApp;
+        tg.expand();
+        tg.ready(); // Уведомляем систему, что приложение загрузилось
 
-        tg.expand(); // Разворачиваем приложение на весь экран
-
-
-
-        const buyBtn = document.getElementById('buy-btn');
-
-
-
-        buyBtn.addEventListener('click', () => {
-
-            // Данные, которые мы отправляем боту
-
+        function sendTarif(id) {
+            // БЕЗОПАСНОСТЬ: Мы НЕ отправляем цену.
+            // Мы отправляем только строковый ключ 'tarif_id'.
             const data = {
-
-                item: "Monthly Subscription",
-
-                price: 10.00
-
+                tarif_id: id
             };
-
-            tg.sendData(JSON.stringify(data)); // Отправка данных боту лол
-
-        });
-
+            
+            // Метод sendData закрывает WebApp и отправляет данные боту
+            tg.sendData(JSON.stringify(data));
+        }
     </script>
-
 </body>
-
-
-
 </html>
