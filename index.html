@@ -22,8 +22,8 @@
         button {
             background-color: var(--tg-theme-button-color, #248bed);
             color: var(--tg-theme-button-text-color, #ffffff);
-            border: none; border-radius: 8px; padding: 12px 20px;
-            width: 100%; font-size: 16px; font-weight: 500; cursor: pointer;
+            border: none; border-radius: 8px; padding: 14px 20px;
+            width: 100%; font-size: 16px; font-weight: bold; cursor: pointer;
         }
     </style>
 </head>
@@ -33,26 +33,32 @@
         <div class="card">
             <h3>Месячный доступ</h3>
             <div class="price">€ 10.00</div>
-            <p>Доступ к закрытому сообществу и эксклюзивному контенту.</p>
+            <p>Доступ к AnimeWorldScroll на 30 дней.</p>
             <button id="buy-btn">Выбрать тариф</button>
         </div>
     </div>
 
     <script>
         let tg = window.Telegram.WebApp;
-        tg.expand(); // Разворачиваем приложение на весь экран
+        tg.expand();
+        tg.ready(); // Сообщаем Telegram, что приложение загружено
 
         const buyBtn = document.getElementById('buy-btn');
 
         buyBtn.addEventListener('click', () => {
-            // Данные, которые мы отправляем боту
             const data = {
                 item: "Monthly Subscription",
                 price: 10.00
             };
-            tg.sendData(JSON.stringify(data)); // Отправка данных боту лол
+            
+            // Отправляем данные
+            tg.sendData(JSON.stringify(data));
+            
+            // На всякий случай дублируем закрытие, чтобы пользователь видел реакцию
+            setTimeout(() => {
+                tg.close();
+            }, 100);
         });
     </script>
 </body>
-
 </html>
